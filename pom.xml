@@ -66,7 +66,12 @@
             <artifactId>webdrivermanager</artifactId>
             <version>5.2.1</version>
         </dependency>
-
+        <!-- https://mvnrepository.com/artifact/org.aeonbits.owner/owner -->
+        <dependency>
+            <groupId>org.aeonbits.owner</groupId>
+            <artifactId>owner</artifactId>
+            <version>1.0.12</version>
+        </dependency>
     </dependencies>
 
 

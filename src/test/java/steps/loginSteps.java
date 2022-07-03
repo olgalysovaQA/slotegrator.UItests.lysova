@@ -1,6 +1,6 @@
 package steps;
 
-import Config.PropertiesFile;
+import Config.ProjectConfig;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
@@ -8,12 +8,12 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import pagefactory.loginPage;
 import pagefactory.playerManagementPage;
 
-import java.io.IOException;
 import java.time.Duration;
 
 public class loginSteps {
@@ -21,14 +21,12 @@ public class loginSteps {
     WebDriver driver = null;
     loginPage login;
     playerManagementPage playerManagement;
-    public static String username;
-    public static String password;
-    public static String url;
+
+    ProjectConfig config = ConfigFactory.create(ProjectConfig.class);
 
     @Before(value = "@login")
-    public void browserSetup() throws IOException {
+    public void browserSetup() {
 
-        PropertiesFile.readPropertiesFile();
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20));
@@ -38,15 +36,15 @@ public class loginSteps {
     @Given("user is on login page")
     public void verifyLoginPage() {
 
-        driver.navigate().to(url);
+        driver.navigate().to(config.url());
     }
 
     @When("user enters username and password")
     public void user_enters_username_and_password() {
 
         login = new loginPage(driver);
-        login.enterUsername(username);
-        login.enterPassword(password);
+        login.enterUsername(config.username());
+        login.enterPassword(config.password());
 
     }
 

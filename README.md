@@ -1,7 +1,17 @@
 # Run project
 
-Use TestRunner - src/test/java/steps/TestRunner.java
+Use TestRunner.class
+```
+src/test/java/steps/TestRunner.java
+
+```
+
 
 # Report file
 
-Report file is located at target/HtmlReports.html
+Report file is located at
+
+```
+target/HtmlReports.html
+
+```

@@ -1,15 +1,15 @@
 package steps;
 
-import Config.PropertiesFile;
+import Config.ProjectConfig;
 import io.cucumber.java.*;
 import io.cucumber.java.en.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import pagefactory.loginPage;
 import pagefactory.playerManagementPage;
 
-import java.io.IOException;
 import java.time.Duration;
 
 public class playerSortingSteps {
@@ -19,15 +19,11 @@ public class playerSortingSteps {
     loginPage login;
     playerManagementPage playerManagement;
 
-    public static String username;
-    public static String password;
-    public static String url;
-
+    ProjectConfig config = ConfigFactory.create(ProjectConfig.class);
 
     @Before(value = "@Sorting")
-    public void browserSetup() throws IOException {
+    public void browserSetup() {
 
-        PropertiesFile.readPropertiesFile();
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20));
@@ -36,10 +32,10 @@ public class playerSortingSteps {
 
     @Given("user is on player management page")
     public void user_is_on_player_management_page() {
-        driver.navigate().to(url);
+        driver.navigate().to(config.url());
 
         login = new loginPage(driver);
-        login.registrationsSteps(username, password);
+        login.registrationsSteps(config.username(), config.password());
 
         playerManagement = new playerManagementPage(driver);
         playerManagement.openPlayerManagementPage();
